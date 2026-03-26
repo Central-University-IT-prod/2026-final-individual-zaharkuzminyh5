@@ -1,0 +1,15 @@
+# DVC ignore patterns
+**/__pycache__/
+**/*.pyc
+**/.git/**
+**/.env
+**/models/**
+**/data/raw/**
+**/data/processed/**
+**/data/features.parquet
+**/data/interactions.parquet
+**/great_expectations/.ge/**
+**/reports/*.html
+**/.pytest_cache/**
+**/coverage.xml
+**/.coverage

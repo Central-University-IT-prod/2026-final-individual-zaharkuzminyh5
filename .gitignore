@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Data
+data/raw/
+data/processed/
+data/features.parquet
+data/interactions.parquet
+data/reference_features.parquet
+
+# Models
+models/
+*.pkl
+*.h5
+
+# Reports
+reports/*.html
+reports/*.json
+!reports/.gitkeep
+
+# MLflow
+mlruns/
+*.mlflow
+
+# Great Expectations
+great_expectations/.ge/
+great_expectations/uncommitted/
+
+# DVC
+.dvc/
+*.dvc.lock
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+/ml/

@@ -1,0 +1,64 @@
+stages:
+  validate:
+    cmd: python src/data/validate.py
+    deps:
+      - src/data/validate.py
+      - src/data/loader_impl.py
+      - params.yaml
+    outs:
+      - reports/validation_report.json
+    metrics:
+      - reports/validation_metrics.json
+
+  build_features:
+    cmd: python src/ml/build_features.py
+    deps:
+      - src/ml/build_features.py
+      - src/ml/features.py
+      - src/data/loader_impl.py
+      - params.yaml
+    outs:
+      - data/features.parquet
+      - data/interactions.parquet
+
+  train:
+    cmd: python src/ml/train.py
+    deps:
+      - src/ml/train.py
+      - src/ml/model.py
+      - src/ml/features.py
+      - data/features.parquet
+      - data/interactions.parquet
+      - params.yaml
+    outs:
+      - models/model.pkl
+    metrics:
+      - reports/train_metrics.json
+    params:
+      - model.type
+      - model.n_factors
+      - model.n_iterations
+      - model.regularization
+
+  evaluate:
+    cmd: python src/ml/evaluate.py
+    deps:
+      - src/ml/evaluate.py
+      - src/ml/model.py
+      - models/model.pkl
+      - data/features.parquet
+    outs:
+      - reports/evaluation_report.json
+    metrics:
+      - reports/eval_metrics.json
+
+  check_drift:
+    cmd: python src/monitoring/drift.py
+    deps:
+      - src/monitoring/drift.py
+      - data/features.parquet
+      - params.yaml
+    outs:
+      - reports/drift_report.json
+    metrics:
+      - reports/drift_metrics.json

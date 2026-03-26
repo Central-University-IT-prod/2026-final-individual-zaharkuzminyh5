@@ -1,0 +1,59 @@
+# Параметры пайплайна Look-a-Like сервиса
+
+# Параметры модели
+model:
+  type: "als" # als или lightgbm
+  n_factors: 64
+  n_iterations: 5
+  regularization: 0.1
+  top_n_default: 100
+
+# Параметры дрейфа
+drift:
+  threshold: 0.5
+  metrics:
+    - psi
+    - ks_test
+  reference_version: "v1"
+
+# Параметры валидации
+validation:
+  min_records:
+    people: 1
+    transaction: 1
+    offer: 1
+    merchant: 1
+  required_columns:
+    people: ["user_id", "age_bucket", "gender_cd", "region"]
+    transaction:
+      ["transaction_id", "user_id", "merchant_id_tx", "event_date", "brand_dk"]
+    offer: ["offer_id", "merchant_id_offer", "start_date", "end_date"]
+    merchant: ["merchant_id_offer", "merchant_status", "brand_dk"]
+
+# Параметры фичей
+features:
+  tx_windows: [7, 30, 90]
+  receipt_windows: [30, 90]
+  categorical_features:
+    - age_bucket
+    - gender_cd
+    - region
+    - segment
+  numerical_features:
+    - tx_count_30d
+    - tx_count_90d
+    - avg_amount_30d
+    - online_share_90d
+    - receipts_count_30d
+
+# MLflow
+mlflow:
+  experiment_name: "lookalike-cf"
+  tracking_uri: "http://mlflow:5000"
+
+# S3/MinIO
+s3:
+  endpoint: "minio:9000"
+  bucket: "lookalike-data"
+  access_key: "minioadmin"
+  secret_key: "minioadmin"
